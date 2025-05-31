@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "express.js": "^1.0.0",
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.15.1",
+    "socket.io": "^4.8.1"
+  }
+}

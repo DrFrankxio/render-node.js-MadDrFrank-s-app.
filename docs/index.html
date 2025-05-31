@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Chat local.</title>
+<script src="/socket.io/socket.io.js"></script>
+<style>
+  #mensajes { height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; }
+  #mensajeInput { width: 80%; }
+</style>
+</head>
+<body>
+  <div id="mensajes"></div>
+  <input id="mensajeInput" placeholder="Escribe tu mensaje" />
+  <button onclick="enviarMensaje()">Enviar</button>
+
+<script>
+  const socket = io();
+
+  const mensajesDiv = document.getElementById('mensajes');
+  const mensajeInput = document.getElementById('mensajeInput');
+
+  // Función para añadir mensajes al div y hacer scroll abajo
+  function agregarMensaje(m) {
+    const div = document.createElement('div');
+    div.textContent = `[${new Date(m.timestamp).toLocaleTimeString()}] ${m.username}: ${m.text}`;
+    mensajesDiv.appendChild(div);
+    mensajesDiv.scrollTop = mensajesDiv.scrollHeight;
+  }
+
+  // Recibir historial de mensajes
+  socket.on('mensajesPrevios', (msgs) => {
+    mensajesDiv.innerHTML = ''; // limpio antes
+    msgs.forEach(agregarMensaje);
+  });
+
+  // Recibir mensajes nuevos en tiempo real
+  socket.on('mensaje', (msg) => {
+    agregarMensaje(msg);
+  });
+
+  // Enviar mensaje
+  function enviarMensaje() {
+    const texto = mensajeInput.value.trim();
+    if (!texto) return;
+    const mensaje = { username: 'Usuario' + Math.floor(Math.random()*1000), text: texto };
+    socket.emit('mensaje', mensaje);
+    mensajeInput.value = '';
+  }
+
+  // Opcional: enviar mensaje con Enter
+  mensajeInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      enviarMensaje();
+    }
+  });
+</script>
+
+</body>
+</html>
