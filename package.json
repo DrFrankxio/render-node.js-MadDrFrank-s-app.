@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Servidor Node.js con Express, Socket.io y Mongoose en Render",
   "main": "game.js",
-  "repository": "https://github.com/tu-usuario/tu-repo",
+  "repository": "https://github.com/DrFrankxio/render-node.js-MadDrFrank-s-app./tree/main",
   "author": "Tu Nombre",
   "license": "MIT",
   "private": false,
