@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: nombre-de-tu-servicio
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        value: tu_mongo_uri_aqui
